@@ -19,7 +19,7 @@ module.exports = yeoman.generators.Base.extend({
     var prompts = [{
       type: 'confirm',
       name: 'someOption',
-      message: 'Want some awesomeness?',
+      message: 'In the directory where you want this?',
       default: true
     }];
 
