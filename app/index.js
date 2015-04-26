@@ -19,11 +19,17 @@ module.exports = yeoman.generators.Base.extend({
 
     var prompts = [
       {
-      type: 'confirm',
-      name: 'someOption',
-      message: 'In the directory where you want this?',
-      default: true
+        type: 'confirm',
+        name: 'someOption',
+        message: 'In the directory where you want this?',
+        default: true
       }
+      //{
+      //  type: 'confirm',
+      //  name: 'installDeps',
+      //  message: 'Want to install dependencies after?',
+      //  default: true
+      //}
     ];
 
     this.prompt(prompts, function (props) {
@@ -49,25 +55,26 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   end: function() {
-    var done = this.async();
-    var that = this;
+    //var done = this.async();
+    //var that = this;
 
     this.log(yosay(
       'All done with main install!'
     ));
-
-    this.prompt([
-      {
-        type: 'confirm',
-        name: 'extras',
-        message: 'Would you like to install some extras too?',
-        default: false
-      }
-    ], function (props) {
-      that.log('The `extras` sub-generator, can be ran by itself anytime with `yo pattern-lab-starter:extras`.');
-      if (props.extras) {
-        that.spawnCommand('yo', ['pattern-lab-starter:extras']);
-      }
-    });
+    //
+    //this.prompt([
+    //  {
+    //    type: 'confirm',
+    //    name: 'extras',
+    //    message: 'Would you like to install some extras too?',
+    //    default: false
+    //  }
+    //], function (props) {
+    //  this.log('The `extras` sub-generator, can be ran by itself anytime with `yo pattern-lab-starter:extras`');
+    //  if (props.extras) {
+    //    this.spawnCommand('yo', ['pattern-lab-starter:extras']);
+    //  }
+    //}.bind(this));
+    this.log('The `extras` sub-generator, can be ran by itself anytime with `yo pattern-lab-starter:extras`');
   }
 });
