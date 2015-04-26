@@ -11,3 +11,9 @@ Finally, initiate the generator:
 ```bash
 yo pattern-lab-starter
 ```
+
+Extras can be installed with:
+
+```bash
+yo pattern-lab-starter:extras
+```
