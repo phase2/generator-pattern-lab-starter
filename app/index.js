@@ -2,6 +2,7 @@
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
+var exec = require('child_process').exec;
 
 module.exports = yeoman.generators.Base.extend({
   initializing: function () {
@@ -16,21 +17,23 @@ module.exports = yeoman.generators.Base.extend({
       'Welcome to the remarkable ' + chalk.red('PatternLabStarter') + ' generator!'
     ));
 
-    var prompts = [{
+    var prompts = [
+      {
       type: 'confirm',
       name: 'someOption',
       message: 'In the directory where you want this?',
       default: true
-    }];
+      }
+    ];
 
     this.prompt(prompts, function (props) {
       this.someOption = props.someOption;
-
+      
       done();
     }.bind(this));
   },
 
-  cloning: function() {
+  writing: function() {
     var done = this.async();
 
     this.remote('phase2', 'pattern-lab-starter', 'master', function (err, remote) {
@@ -41,6 +44,30 @@ module.exports = yeoman.generators.Base.extend({
 
   install: function () {
     this.installDependencies();
+    this.log('Installing Ruby dependencies with `bundle install` ... ');
     this.spawnCommand('bundle', ['install']);
+  },
+
+  end: function() {
+    var done = this.async();
+    var that = this;
+
+    this.log(yosay(
+      'All done with main install!'
+    ));
+
+    this.prompt([
+      {
+        type: 'confirm',
+        name: 'extras',
+        message: 'Would you like to install some extras too?',
+        default: false
+      }
+    ], function (props) {
+      that.log('The `extras` sub-generator, can be ran by itself anytime with `yo pattern-lab-starter:extras`.');
+      if (props.extras) {
+        that.spawnCommand('yo', ['pattern-lab-starter:extras']);
+      }
+    });
   }
 });
