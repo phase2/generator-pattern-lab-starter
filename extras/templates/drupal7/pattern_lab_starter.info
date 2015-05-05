@@ -1,0 +1,13 @@
+name = Pattern Lab Starter
+description = A theme with Pattern Lab built in
+core = 7.x
+
+stylesheets[screen][] = css/style.css
+
+;bower:css
+;endbower
+
+;bower:js
+;endbower
+
+scripts[] = js/script.js
