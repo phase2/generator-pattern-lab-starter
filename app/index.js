@@ -45,7 +45,7 @@ module.exports = yeoman.generators.Base.extend({
     this.remote('phase2', 'pattern-lab-starter', 'master', function (err, remote) {
       remote.directory('.', '');
       done();
-    });
+    }, true);
   },
 
   install: function () {
