@@ -24,6 +24,12 @@ module.exports = yeoman.generators.Base.extend({
         type: 'string',
         name: 'themeName',
         message: 'What theme name do you want? A folder with that will be created. Just hit enter if you are already in the theme folder'
+      },
+      {
+        type: 'confirm',
+        name: 'extras',
+        message: 'Would you like to install some extras too?',
+        default: false
       }
       //{
       //  type: 'confirm',
@@ -35,14 +41,15 @@ module.exports = yeoman.generators.Base.extend({
 
     this.prompt(prompts, function (props) {
       answers.themeName = props.themeName;
-
+      if (props.extras) {
+        this.composeWith('pattern-lab-starter:extras');
+      }
       done();
     }.bind(this));
   },
 
   writing: function() {
     var done = this.async();
-
     this.remote('phase2', 'pattern-lab-starter', 'master', function (err, remote) {
       remote.directory('.', answers.themeName);
       done();
@@ -63,19 +70,19 @@ module.exports = yeoman.generators.Base.extend({
       'All done with main install!'
     ));
     //
-    this.prompt([
-      {
-        type: 'confirm',
-        name: 'extras',
-        message: 'Would you like to install some extras too?',
-        default: false
-      }
-    ], function (props) {
-      this.log('The `extras` sub-generator, can be ran by itself anytime with `yo pattern-lab-starter:extras`');
-      if (props.extras) {
-        this.spawnCommand('yo', ['pattern-lab-starter:extras']);
-      }
-    }.bind(this));
-    this.log('The `extras` sub-generator, can be ran by itself anytime with `yo pattern-lab-starter:extras`');
+    //this.prompt([
+    //  {
+    //    type: 'confirm',
+    //    name: 'extras',
+    //    message: 'Would you like to install some extras too?',
+    //    default: false
+    //  }
+    //], function (props) {
+    //  this.log('The `extras` sub-generator, can be ran by itself anytime with `yo pattern-lab-starter:extras`');
+    //  if (props.extras) {
+    //    this.spawnCommand('yo', ['pattern-lab-starter:extras']);
+    //  }
+    //}.bind(this));
+    //this.log('The `extras` sub-generator, can be ran by itself anytime with `yo pattern-lab-starter:extras`');
   }
 });
