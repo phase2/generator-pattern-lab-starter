@@ -4,6 +4,8 @@ var chalk = require('chalk');
 var yosay = require('yosay');
 var exec = require('child_process').exec;
 
+var answers = {};
+
 module.exports = yeoman.generators.Base.extend({
   initializing: function () {
     this.pkg = require('../package.json');
@@ -19,10 +21,9 @@ module.exports = yeoman.generators.Base.extend({
 
     var prompts = [
       {
-        type: 'confirm',
-        name: 'someOption',
-        message: 'In the directory where you want this?',
-        default: true
+        type: 'string',
+        name: 'themeName',
+        message: 'What theme name do you want? A folder with that will be created. Just hit enter if you are already in the theme folder'
       }
       //{
       //  type: 'confirm',
@@ -33,7 +34,7 @@ module.exports = yeoman.generators.Base.extend({
     ];
 
     this.prompt(prompts, function (props) {
-      this.someOption = props.someOption;
+      answers.themeName = props.themeName;
 
       done();
     }.bind(this));
@@ -43,15 +44,15 @@ module.exports = yeoman.generators.Base.extend({
     var done = this.async();
 
     this.remote('phase2', 'pattern-lab-starter', 'master', function (err, remote) {
-      remote.directory('.', '');
+      remote.directory('.', answers.themeName);
       done();
     }, true);
   },
 
   install: function () {
-    this.installDependencies();
-    this.log('Installing Ruby dependencies with `bundle install` ... ');
-    this.spawnCommand('bundle', ['install']);
+    //this.installDependencies();
+    //this.log('Installing Ruby dependencies with `bundle install` ... ');
+    //this.spawnCommand('bundle', ['install']);
   },
 
   end: function() {
