@@ -50,9 +50,9 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   install: function () {
-    //this.installDependencies();
-    //this.log('Installing Ruby dependencies with `bundle install` ... ');
-    //this.spawnCommand('bundle', ['install']);
+    this.installDependencies();
+    this.log('Installing Ruby dependencies with `bundle install` ... ');
+    this.spawnCommand('bundle', ['install']);
   },
 
   end: function() {
@@ -63,19 +63,19 @@ module.exports = yeoman.generators.Base.extend({
       'All done with main install!'
     ));
     //
-    //this.prompt([
-    //  {
-    //    type: 'confirm',
-    //    name: 'extras',
-    //    message: 'Would you like to install some extras too?',
-    //    default: false
-    //  }
-    //], function (props) {
-    //  this.log('The `extras` sub-generator, can be ran by itself anytime with `yo pattern-lab-starter:extras`');
-    //  if (props.extras) {
-    //    this.spawnCommand('yo', ['pattern-lab-starter:extras']);
-    //  }
-    //}.bind(this));
+    this.prompt([
+      {
+        type: 'confirm',
+        name: 'extras',
+        message: 'Would you like to install some extras too?',
+        default: false
+      }
+    ], function (props) {
+      this.log('The `extras` sub-generator, can be ran by itself anytime with `yo pattern-lab-starter:extras`');
+      if (props.extras) {
+        this.spawnCommand('yo', ['pattern-lab-starter:extras']);
+      }
+    }.bind(this));
     this.log('The `extras` sub-generator, can be ran by itself anytime with `yo pattern-lab-starter:extras`');
   }
 });
