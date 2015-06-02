@@ -16,15 +16,10 @@ module.exports = yeoman.generators.Base.extend({
 
     // Have Yeoman greet the user.
     this.log(yosay(
-      'Welcome to the remarkable ' + chalk.red('PatternLabStarter') + ' generator!'
+      'Welcome to the remarkable ' + chalk.red('PatternLabStarter') + ' generator!' + '\nPlease be in the folder you want files in now.'
     ));
 
     var prompts = [
-      {
-        type: 'string',
-        name: 'themeName',
-        message: 'What theme name do you want? A folder with that will be created. Just hit enter if you are already in the theme folder'
-      },
       {
         type: 'confirm',
         name: 'extras',

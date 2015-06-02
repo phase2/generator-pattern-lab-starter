@@ -1,6 +1,6 @@
 {
   "name": "generator-pattern-lab-starter",
-  "version": "0.0.8",
+  "version": "0.1.0",
   "description": "Yeoman generator",
   "license": "MIT",
   "main": "app/index.js",
