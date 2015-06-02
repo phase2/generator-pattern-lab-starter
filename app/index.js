@@ -35,7 +35,6 @@ module.exports = yeoman.generators.Base.extend({
     ];
 
     this.prompt(prompts, function (props) {
-      answers.themeName = props.themeName;
       if (props.extras) {
         this.composeWith('pattern-lab-starter:extras');
       }
@@ -46,7 +45,7 @@ module.exports = yeoman.generators.Base.extend({
   writing: function() {
     var done = this.async();
     this.remote('phase2', 'pattern-lab-starter', 'master', function (err, remote) {
-      remote.directory('.', answers.themeName);
+      remote.directory('.', '');
       done();
     }, true);
   },
