@@ -20,12 +20,12 @@ module.exports = yeoman.generators.Base.extend({
     ));
 
     var prompts = [
-      {
-        type: 'confirm',
-        name: 'extras',
-        message: 'Would you like to install some extras too?',
-        default: false
-      }
+      //{
+      //  type: 'confirm',
+      //  name: 'extras',
+      //  message: 'Would you like to install some extras too?',
+      //  default: false
+      //}
       //{
       //  type: 'confirm',
       //  name: 'installDeps',
@@ -34,12 +34,12 @@ module.exports = yeoman.generators.Base.extend({
       //}
     ];
 
-    this.prompt(prompts, function (props) {
-      if (props.extras) {
-        this.composeWith('pattern-lab-starter:extras');
-      }
-      done();
-    }.bind(this));
+    //this.prompt(prompts, function (props) {
+    //  if (props.extras) {
+    //    this.composeWith('pattern-lab-starter:extras');
+    //  }
+    //  done();
+    //}.bind(this));
   },
 
   writing: function() {
@@ -61,7 +61,7 @@ module.exports = yeoman.generators.Base.extend({
     //var that = this;
 
     this.log(yosay(
-      'All done with main install!'
+      'All done with main install! \nConsider installing extras with `yo pattern-lab-starter:extras'
     ));
   }
 });
