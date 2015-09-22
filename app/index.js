@@ -43,9 +43,13 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   writing: function() {
+    var installPath = '';
+    if (this.options.themePath) {
+      installPath = this.options.themePath;
+    }
     var done = this.async();
     this.remote('phase2', 'pattern-lab-starter', 'master', function (err, remote) {
-      remote.directory('.', '');
+      remote.directory('.', installPath);
       done();
     }, true);
   },
