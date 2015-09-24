@@ -16,7 +16,7 @@ module.exports = yeoman.generators.Base.extend({
     }
 
     this.pkg = require('../package.json');
-    options.themeName = _.last(this.env.cwd.split('/'));
+    options.themeName = _.last(this.env.cwd.split('/')); // parent folder
     options = _.assign(options, this.options);
   },
 
@@ -49,9 +49,7 @@ module.exports = yeoman.generators.Base.extend({
 
   install: function () {
     if (options.installDeps) {
-      this.installDependencies();
-      this.log('Installing Ruby dependencies with `bundle install` ... ');
-      this.spawnCommand('bundle', ['install']);
+      this.npmInstall();
     }
   },
 
