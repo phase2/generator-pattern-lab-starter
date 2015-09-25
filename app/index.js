@@ -17,12 +17,21 @@ module.exports = yeoman.generators.Base.extend({
 
     this.pkg = require('../package.json');
     options.themeName = _.last(this.env.cwd.split('/')); // parent folder
+    options.themePath = '';
     options = _.assign(options, this.options);
   },
 
   prompting: function () {
     var done = this.async();
     var prompts = [];
+
+    if (!options.themeName) {
+      prompts.push({
+        name: 'themeName',
+        message: 'What would you like to name the theme?',
+        default: ''
+      });
+    }
 
     if (!options.installDeps) {
       prompts.push({
@@ -37,6 +46,13 @@ module.exports = yeoman.generators.Base.extend({
       options = _.assign(options, props);
       done();
     });
+
+    this.composeWith('pattern-lab-starter:extras', {options: options});
+
+  },
+
+  configuring: function () {
+
   },
 
   writing: function () {

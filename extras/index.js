@@ -4,14 +4,16 @@ var chalk = require('chalk');
 var yosay = require('yosay');
 var fs = require('fs');
 var _ = require('lodash');
+var options = {};
 
 module.exports = generators.Base.extend({
-initializing: function () {
+  initializing: function () {
     this.pkg = require('../package.json');
+    options = _.assign(options, this.options);
   },
 
   prompting: function () {
-     var done = this.async();
+    var done = this.async();
 
     // Have Yeoman greet the user.
     this.log(yosay(
@@ -19,7 +21,7 @@ initializing: function () {
     ));
 
     // Creates an array of directories inside "app/templates/" - our pattern options
-    var patternOptions = _.filter(fs.readdirSync(this.templatePath()), function(value){
+    var patternOptions = _.filter(fs.readdirSync(this.templatePath()), function (value) {
       // filtering out directories that start with `.` - like `.DS_Store`
       if (!value.match(/^\./)) {
         return true;
@@ -27,28 +29,37 @@ initializing: function () {
         return false;
       }
     });
+    //
+    //if (patternOptions.drupal7 && options.backEnd === '7.x') {
+    //  options.patternCollection = 'drupal7';
+    //}
 
     // Setting up our questions
-    var prompts = [{
-      type: 'list',
-      name: 'patternCollection',
-      message: 'Which set of patterns would you like?',
-      choices: patternOptions
-    }];
+    var prompts = [];
+
+    if (!options.patternCollection) {
+      prompts.push({
+        type: 'list',
+        name: 'patternCollection',
+        message: 'Which set of patterns would you like?',
+        choices: patternOptions
+      });
+    }
 
     // Asking our questions
     this.prompt(prompts, function (props) {
-      this.props = props;
-      // To access props later use this.props.someOption;
+      options = _.assign(options, props);
       done();
     }.bind(this));
 
   },
+
   writing: {
     app: function () {
+      console.log('extras writing');
       this.fs.copy(
-        this.templatePath(this.props.patternCollection),
-        this.destinationPath()
+        this.templatePath(options.patternCollection),
+        this.destinationPath(options.themePath)
       );
     }
   }
