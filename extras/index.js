@@ -37,7 +37,7 @@ module.exports = generators.Base.extend({
     // Setting up our questions
     var prompts = [];
 
-    if (!options.patternCollection) {
+    if (_.isUndefined(options.patternCollection)) {
       prompts.push({
         type: 'list',
         name: 'patternCollection',

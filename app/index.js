@@ -25,7 +25,7 @@ module.exports = yeoman.generators.Base.extend({
     var done = this.async();
     var prompts = [];
 
-    if (!options.themeName) {
+    if (_.isUndefined(options.themeName)) {
       prompts.push({
         name: 'themeName',
         message: 'What would you like to name the theme?',
@@ -33,7 +33,7 @@ module.exports = yeoman.generators.Base.extend({
       });
     }
 
-    if (!options.installDeps) {
+    if (_.isUndefined(options.installDeps)) {
       prompts.push({
         type: 'confirm',
         name: 'installDeps',
