@@ -33,14 +33,14 @@ module.exports = yeoman.generators.Base.extend({
       });
     }
 
-    if (_.isUndefined(options.installDeps)) {
-      prompts.push({
-        type: 'confirm',
-        name: 'installDeps',
-        message: 'Want to install dependencies after?',
-        default: true
-      });
-    }
+    //if (_.isUndefined(options.installDeps)) {
+    //  prompts.push({
+    //    type: 'confirm',
+    //    name: 'installDeps',
+    //    message: 'Want to install dependencies after?',
+    //    default: true
+    //  });
+    //}
 
     this.prompt(prompts, function (props) {
       options = _.assign(options, props);
