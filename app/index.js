@@ -1,5 +1,6 @@
 'use strict';
 var yeoman = require('yeoman-generator');
+var myPrompts = require('./prompts.js');
 var chalk = require('chalk');
 var yosay = require('yosay');
 var exec = require('child_process').exec;
@@ -14,7 +15,6 @@ module.exports = yeoman.generators.Base.extend({
         'Welcome to the remarkable ' + chalk.red('PatternLabStarter') + ' generator!' + '\nPlease be in the folder you want files in now.'
       ));
     }
-
     this.pkg = require('../package.json');
     options.themeName = _.last(this.env.cwd.split('/')); // parent folder
     options.themePath = '';
@@ -25,13 +25,11 @@ module.exports = yeoman.generators.Base.extend({
     var done = this.async();
     var prompts = [];
 
-    if (_.isUndefined(options.themeName)) {
-      prompts.push({
-        name: 'themeName',
-        message: 'What would you like to name the theme?',
-        default: ''
-      });
-    }
+    myPrompts.forEach(function (item) {
+      if (_.isUndefined(options[item.name])) {
+        prompts.push(item);
+      }
+    });
 
     //if (_.isUndefined(options.installDeps)) {
     //  prompts.push({
