@@ -16,7 +16,7 @@ module.exports = yeoman.generators.Base.extend({
       ));
     }
     this.pkg = require('../package.json');
-    options.themeName = _.last(this.env.cwd.split('/')); // parent folder
+    //options.themeName = _.last(this.env.cwd.split('/')); // parent folder
     options.themePath = '';
     options = _.assign(options, this.options);
   },

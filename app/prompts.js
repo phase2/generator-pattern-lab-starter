@@ -1,14 +1,14 @@
 'use strict';
+var _ = require('lodash');
 
 module.exports = [
   {
-    name: 'projectName',
-    message: 'Machine name of project?'
-  },
-  {
     name: 'themeName',
     message: 'What would you like to name the theme?',
-    default: ''
+    default: _.last(process.cwd().split('/')),
+    filter: function (response) {
+      return response.replace(' ', '_', 'g');
+    }
   },
   {
     name: 'drupalDistro',

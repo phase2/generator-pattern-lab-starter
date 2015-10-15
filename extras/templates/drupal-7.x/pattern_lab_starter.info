@@ -1,5 +1,5 @@
-name = Pattern Lab Starter
-description = A theme with Pattern Lab built in
+name = <%= themeName %>
+description = <%= projectDescription %>
 core = 7.x
 
 stylesheets[screen][] = css/style.css
