@@ -69,7 +69,7 @@ module.exports = yeoman.generators.Base.extend({
 
   end: function () {
     this.log(yosay(
-      'All done with main install! \nConsider installing extras with `yo pattern-lab-starter:extras'
+      'All done!'
     ));
   }
 });
