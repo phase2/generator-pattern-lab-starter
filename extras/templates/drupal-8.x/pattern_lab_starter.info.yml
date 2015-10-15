@@ -1,0 +1,17 @@
+name: Pattern Lab Starter
+description: A theme with Pattern Lab built in
+type: theme
+screenshot: screenshot.png
+base theme: classy
+core: 8.x
+# Defines libraries group in which we can add css/js.
+libraries:
+  - pattern_lab_starter/global-styling
+# Regions
+regions:
+  header: Header
+  featured: Featured
+  content: Content
+  sidebar_first: First sidebar
+  sidebar_second: Second sidebar
+  footer: Footer
