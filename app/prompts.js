@@ -7,7 +7,7 @@ module.exports = [
     message: 'What would you like to name the theme?',
     default: _.last(process.cwd().split('/')),
     filter: function (response) {
-      return response.replace(' ', '_', 'g');
+      return response.replace(/ /g, '_');
     }
   },
   {
