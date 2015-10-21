@@ -83,25 +83,25 @@ module.exports = generators.Base.extend({
         if (this.options.drupalDistro === 'drupal') {
           if (this.options['drupalDistroVersion-drupal'] === '7.x') {
             this.fs.move(
-              this.destinationPath(destPath) + 'pattern_lab_starter.info',
-              this.destinationPath(destPath) + this.options.themeName + '.info'
+              this.destinationPath(destPath) + '/' + 'pattern_lab_starter.info',
+              this.destinationPath(destPath) + '/' + this.options.themeName + '.info'
             );
           }
           if (this.options['drupalDistroVersion-drupal'] === '8.x') {
             this.fs.move(
-              this.destinationPath(destPath) + 'pattern_lab_starter.info.yml',
-              this.destinationPath(destPath) + this.options.themeName + '.info.yml'
+              this.destinationPath(destPath) + '/' + 'pattern_lab_starter.info.yml',
+              this.destinationPath(destPath) + '/' + this.options.themeName + '.info.yml'
             );
             this.fs.move(
-              this.destinationPath(destPath) + 'pattern_lab_starter.libraries.yml',
-              this.destinationPath(destPath) + this.options.themeName + '.libraries.yml'
+              this.destinationPath(destPath) + '/' + 'pattern_lab_starter.libraries.yml',
+              this.destinationPath(destPath) + '/' + this.options.themeName + '.libraries.yml'
             );
           }
         } else if (this.options.drupalDistro === 'openatrium') {
           if (this.options['drupalDistroVersion-openatrium'] === '7.x') {
             this.fs.move(
-              this.destinationPath(destPath) + 'pattern_lab_starter.info',
-              this.destinationPath(destPath) + this.options.themeName + '.info'
+              this.destinationPath(destPath) + '/' + 'pattern_lab_starter.info',
+              this.destinationPath(destPath) + '/' + this.options.themeName + '.info'
             );
           }
         }
