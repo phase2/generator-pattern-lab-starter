@@ -3,6 +3,7 @@ var yeoman = require('yeoman-generator');
 var myPrompts = require('./prompts.js');
 var chalk = require('chalk');
 var yosay = require('yosay');
+var path = require('path');
 var exec = require('child_process').exec;
 var _ = require('lodash');
 var options = {};
@@ -45,7 +46,9 @@ module.exports = yeoman.generators.Base.extend({
       done();
     });
 
-    this.composeWith('pattern-lab-starter:extras', {options: options});
+    this.composeWith('pattern-lab-starter:extras', {options: options}, {
+      local: path.resolve(__dirname, '../extras')
+    });
 
   },
 
