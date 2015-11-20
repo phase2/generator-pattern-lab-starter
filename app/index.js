@@ -10,13 +10,14 @@ var options = {};
 
 module.exports = yeoman.generators.Base.extend({
   initializing: function () {
+    this.pkg = require('../package.json');
+
     if (!this.options.skipWelcome) {
       // Have Yeoman greet the user.
       this.log(yosay(
-        'Welcome to the remarkable ' + chalk.red('PatternLabStarter') + ' generator!' + '\nPlease be in the folder you want files in now.'
+        'Welcome to the remarkable ' + chalk.red('PatternLabStarter') + ' generator! ' + this.pkg.version + '\nPlease be in the folder you want files in now.'
       ));
     }
-    this.pkg = require('../package.json');
     //options.themeName = _.last(this.env.cwd.split('/')); // parent folder
     options.themePath = '';
     options = _.assign(options, this.options);
