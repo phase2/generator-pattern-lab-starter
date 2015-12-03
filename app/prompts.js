@@ -21,7 +21,7 @@ module.exports = [
     ]
   },
   {
-    name: 'drupalDistroVersion-drupal',
+    name: 'drupalDistroVersion',
     message: 'What version of Drupal is installed?',
     type: 'list',
     default: '7.x',
