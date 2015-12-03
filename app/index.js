@@ -66,9 +66,7 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   install: function () {
-    if (options.installDeps) {
-      this.npmInstall();
-    }
+    this.npmInstall();
   },
 
   end: function () {

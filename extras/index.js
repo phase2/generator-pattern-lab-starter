@@ -110,7 +110,5 @@ module.exports = generators.Base.extend({
 
     }
   }
-  // install: function () {
-  //   this.installDependencies();
-  // }
+
 });
