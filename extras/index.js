@@ -59,17 +59,8 @@ module.exports = generators.Base.extend({
       var patternCollection;
       var destPath = this.options.themePath || './';
 
-      if (this.options.drupalDistro === 'drupal') {
-        if (this.options['drupalDistroVersion-drupal'] === '7.x') {
-          patternCollection = 'drupal-7.x';
-        }
-        if (this.options['drupalDistroVersion-drupal'] === '8.x') {
-          patternCollection = 'drupal-8.x';
-        }
-      } else if (this.options.drupalDistro === 'openatrium') {
-        if (this.options['drupalDistroVersion-openatrium'] === '7.x') {
-          patternCollection = 'openatrium-7.x';
-        }
+      if (['drupal', 'openatrium'].indexOf(this.options.drupalDistro) !== -1) {
+        patternCollection = this.options.drupalDistro + '-' + this.options['drupalDistroVersion'];
       }
 
       if (patternCollection) {
@@ -81,13 +72,13 @@ module.exports = generators.Base.extend({
         );
 
         if (this.options.drupalDistro === 'drupal') {
-          if (this.options['drupalDistroVersion-drupal'] === '7.x') {
+          if (this.options['drupalDistroVersion'] === '7.x') {
             this.fs.move(
               this.destinationPath(destPath) + '/' + 'pattern_lab_starter.info',
               this.destinationPath(destPath) + '/' + this.options.themeName + '.info'
             );
           }
-          if (this.options['drupalDistroVersion-drupal'] === '8.x') {
+          if (this.options['drupalDistroVersion'] === '8.x') {
             this.fs.move(
               this.destinationPath(destPath) + '/' + 'pattern_lab_starter.info.yml',
               this.destinationPath(destPath) + '/' + this.options.themeName + '.info.yml'
@@ -98,7 +89,7 @@ module.exports = generators.Base.extend({
             );
           }
         } else if (this.options.drupalDistro === 'openatrium') {
-          if (this.options['drupalDistroVersion-openatrium'] === '7.x') {
+          if (this.options['drupalDistroVersion'] === '7.x') {
             this.fs.move(
               this.destinationPath(destPath) + '/' + 'pattern_lab_starter.info',
               this.destinationPath(destPath) + '/' + this.options.themeName + '.info'
