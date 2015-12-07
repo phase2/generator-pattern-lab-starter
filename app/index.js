@@ -66,12 +66,16 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   install: function () {
-    this.npmInstall();
+    if (!options['skip-install']) {
+      this.npmInstall();
+    }
   },
 
   end: function () {
-    this.log(yosay(
-      'All done!'
-    ));
+    if (!options['skipGoodbye']) {
+      this.log(yosay(
+        'All done!'
+      ));
+    }
   }
 });
