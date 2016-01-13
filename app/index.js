@@ -33,15 +33,6 @@ module.exports = yeoman.generators.Base.extend({
       }
     });
 
-    //if (_.isUndefined(options.installDeps)) {
-    //  prompts.push({
-    //    type: 'confirm',
-    //    name: 'installDeps',
-    //    message: 'Want to install dependencies after?',
-    //    default: true
-    //  });
-    //}
-
     this.prompt(prompts, function (props) {
       options = _.assign(options, props);
       done();
@@ -59,7 +50,7 @@ module.exports = yeoman.generators.Base.extend({
 
   default: function () {
     var done = this.async();
-    this.remote('phase2', 'pattern-lab-starter', 'v5.0.2', function (err, remote) {
+    this.remote('phase2', 'pattern-lab-starter', 'master', function (err, remote) {
       remote.directory('.', options.themePath);
       done();
     }, true);
