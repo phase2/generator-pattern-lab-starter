@@ -64,9 +64,21 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   end: function () {
-    this.log(yosay(
-      'All done!'
-    ));
+    var finalWords;
+    if (this.options.installDeps) {
+      finalWords = 'All done!\n' +
+      'Run ' + chalk.red('"npm start"') + ' to start.\n' +
+      'See readme.md for more.\n' +
+      'Have a great day!';
+    } else {
+      finalWords = 'All done!\n' +
+      'Install dependencies with ' + chalk.red('"npm install"') +
+      'Run ' + chalk.red('"npm start"') + ' to start.\n' +
+      'See readme.md for more.\n' +
+      'Have a great day!';
+    }
+
+    this.log(yosay(finalWords));
     console.log('If you don\'t see your prompt, try hitting enter.');
   }
 });
