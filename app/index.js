@@ -57,21 +57,25 @@ module.exports = yeoman.generators.Base.extend({
 
   },
 
-  writing: function () {
+  default: function () {
     var done = this.async();
-    this.remote('phase2', 'pattern-lab-starter', 'master', function (err, remote) {
+    this.remote('phase2', 'pattern-lab-starter', 'v5.0.2', function (err, remote) {
       remote.directory('.', options.themePath);
       done();
     }, true);
   },
 
   install: function () {
-    this.npmInstall();
+    if (this.options.installDeps) {
+      console.log('Running "npm install"...');
+      this.npmInstall();
+    }
   },
 
   end: function () {
     this.log(yosay(
       'All done!'
     ));
+    console.log('If you don\'t see your prompt, try hitting enter.');
   }
 });

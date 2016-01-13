@@ -46,7 +46,6 @@ module.exports = generators.Base.extend({
       }
 
       if (patternCollection) {
-        console.log('extras writing');
         this.fs.copyTpl(
           this.templatePath(patternCollection),
           this.destinationPath(destPath),

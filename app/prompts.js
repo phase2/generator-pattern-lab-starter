@@ -33,5 +33,10 @@ module.exports = [
   {
     name: 'projectDescription',
     message: 'Description of project?'
+  },
+  {
+    name: 'installDeps',
+    message: 'Want to install dependencies afterwards?',
+    type: 'confirm'
   }
 ];
