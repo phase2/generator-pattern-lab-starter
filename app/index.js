@@ -38,9 +38,10 @@ module.exports = yeoman.generators.Base.extend({
       done();
     });
 
-    this.composeWith('pattern-lab-starter:extras', {options: options}, {
-      local: path.resolve(__dirname, '../extras')
-    });
+    // disabling this for now as pattern lab starter v8 doesn't really have drupal 7 or drupal 8 differences
+    // this.composeWith('pattern-lab-starter:extras', {options: options}, {
+    //   local: path.resolve(__dirname, '../extras')
+    // });
 
   },
 
