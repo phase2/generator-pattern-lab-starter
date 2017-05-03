@@ -1,14 +1,14 @@
 'use strict';
-var yeoman = require('yeoman-generator');
+var Generator = require('yeoman-generator');
 var myPrompts = require('./prompts.js');
 var chalk = require('chalk');
 var yosay = require('yosay');
 var path = require('path');
-var exec = require('child_process').exec;
+var exec = require('child_process').execSync;
 var _ = require('lodash');
 var options = {};
 
-module.exports = yeoman.generators.Base.extend({
+module.exports = Generator.extend({
   initializing: function () {
     this.pkg = require('../package.json');
 
@@ -24,7 +24,6 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   prompting: function () {
-    var done = this.async();
     var prompts = [];
 
     myPrompts.forEach(function (item) {
@@ -33,9 +32,8 @@ module.exports = yeoman.generators.Base.extend({
       }
     });
 
-    this.prompt(prompts, function (props) {
+    return this.prompt(prompts).then(function (props) {
       options = _.assign(options, props);
-      done();
     });
 
     // disabling this for now as pattern lab starter v8 doesn't really have drupal 7 or drupal 8 differences
@@ -50,11 +48,10 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   default: function () {
-    var done = this.async();
-    this.remote('phase2', 'pattern-lab-starter', 'master', function (err, remote) {
-      remote.directory('.', options.themePath);
-      done();
-    }, true);
+    exec('curl -OL https://github.com/phase2/pattern-lab-starter/archive/master.tar.gz | tar -xzf -', {
+      cwd: options.themePath
+    });
+    this.fs.move(options.themePath + '/pattern-lab-starter-master, options.themePath + '/pattern-lab-starter');
   },
 
   install: function () {

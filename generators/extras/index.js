@@ -1,18 +1,17 @@
 'use strict';
-var generators = require('yeoman-generator');
+var Generator = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
 var myPrompts = require('../app/prompts.js');
 var fs = require('fs');
 var _ = require('lodash');
 
-module.exports = generators.Base.extend({
+module.exports = Generator.extend({
   initializing: function () {
     //this.pkg = require('../package.json');
   },
 
   prompting: function () {
-    var done = this.async();
     var prompts = [];
 
     myPrompts.forEach(function (item) {
@@ -21,7 +20,7 @@ module.exports = generators.Base.extend({
       }
     }.bind(this));
 
-    this.prompt(prompts, function (props) {
+    return this.prompt(prompts).then(function (props) {
       this.options = _.assign(this.options, props);
       done();
     }.bind(this));
