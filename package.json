@@ -11,7 +11,7 @@
     "url": "https://github.com/EvanLovely"
   },
   "engines": {
-    "node": ">=0.12.0"
+    "node": ">=4.2.0"
   },
   "scripts": {
     "test": "mocha",
@@ -29,7 +29,6 @@
   "dependencies": {
     "chalk": "^1.1.3",
     "lodash": "^4.17.4",
-    "pattern-lab-starter": "github:phase2/pattern-lab-starter#master",
     "yeoman-generator": "^1.1.0",
     "yosay": "^1.2.1"
   },
