@@ -1,6 +1,9 @@
 language: node_js
 node_js:
-  - '0.10'
+  - '7'
+  - '6'
+  - '5'
+  - '4'
 before_install:
   - currentfolder=${PWD##*/}
   - if [ "$currentfolder" != 'generator-pattern-lab-starter' ]; then cd .. && eval "mv $currentfolder generator-pattern-lab-starter" && cd generator-pattern-lab-starter; fi

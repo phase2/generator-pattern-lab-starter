@@ -1,16 +1,16 @@
 'use strict';
-var yeoman = require('yeoman-generator');
+var Generator = require('yeoman-generator');
 var myPrompts = require('./prompts.js');
 var chalk = require('chalk');
 var yosay = require('yosay');
 var path = require('path');
-var exec = require('child_process').exec;
+var exec = require('child_process').execSync;
 var _ = require('lodash');
 var options = {};
 
-module.exports = yeoman.generators.Base.extend({
+module.exports = Generator.extend({
   initializing: function () {
-    this.pkg = require('../package.json');
+    this.pkg = require('../../package.json');
 
     if (!this.options.skipWelcome) {
       // Have Yeoman greet the user.
@@ -19,12 +19,11 @@ module.exports = yeoman.generators.Base.extend({
       ));
     }
     //options.themeName = _.last(this.env.cwd.split('/')); // parent folder
-    options.themePath = '';
+    // options.themePath = '';
     options = _.assign(options, this.options);
   },
 
   prompting: function () {
-    var done = this.async();
     var prompts = [];
 
     myPrompts.forEach(function (item) {
@@ -33,9 +32,8 @@ module.exports = yeoman.generators.Base.extend({
       }
     });
 
-    this.prompt(prompts, function (props) {
+    return this.prompt(prompts).then(function (props) {
       options = _.assign(options, props);
-      done();
     });
 
     // disabling this for now as pattern lab starter v8 doesn't really have drupal 7 or drupal 8 differences
@@ -50,18 +48,50 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   default: function () {
-    var done = this.async();
-    this.remote('phase2', 'pattern-lab-starter', 'master', function (err, remote) {
-      remote.directory('.', options.themePath);
-      done();
-    }, true);
+    var cmd = [
+      'curl -OL https://github.com/phase2/pattern-lab-starter/archive/master.tar.gz',
+      'gunzip master.tar.gz',
+      'tar -xzf master.tar',
+      'mv pattern-lab-starter-master patternlab',
+      'rm master.tar'
+    ].join(' && ');
+
+    try {
+      exec(cmd, {
+        encoding: 'utf8'
+      });
+    } catch(error) {
+      console.error('An error happened while trying to run this command: ');
+      console.log(cmd);
+      // console.log(error);
+      process.exit(1);
+    }
+
+    if (options.themePath) {
+      var dest = path.resolve(process.cwd(), options.themePath);
+      try {
+        exec('mkdir -p "' + dest + '"', {
+          encoding: 'utf8'
+        });
+      } catch(error) {
+        console.error('Could not "mkdir -p" the themePath. That might be bad, it might not...');
+      }
+
+      try {
+        exec('mv patternlab "' + dest + '"', {
+          encoding: 'utf8'
+        });
+      } catch (error) {
+        console.error('Could not move theme into themePath.');
+      }
+    }
   },
 
   install: function () {
-    if (this.options.installDeps) {
-      console.log('Running "npm install"...');
-      this.npmInstall();
-    }
+    // if (this.options.installDeps) {
+    //   console.log('Running "npm install"...');
+    //   this.npmInstall();
+    // }
   },
 
   end: function () {
