@@ -49,6 +49,7 @@ module.exports = Generator.extend({
 
   default: function () {
     var cmd = [
+      'rm -f master.tar.gz pattern-lab-starter-master patternlab',
       'curl -OL https://github.com/phase2/pattern-lab-starter/archive/master.tar.gz',
       'tar -xzf master.tar.gz',
       'mv pattern-lab-starter-master patternlab',
