@@ -94,6 +94,10 @@ module.exports = Generator.extend({
   },
 
   end: function () {
+    if (this.options.skipGoodbye) {
+      return;
+    }
+
     var finalWords;
     if (this.options.installDeps) {
       finalWords = 'All done!\n' +
