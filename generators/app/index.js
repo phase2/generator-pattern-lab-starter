@@ -48,8 +48,10 @@ module.exports = Generator.extend({
   },
 
   default: function () {
+    var dest = options.themePath ? path.resolve(process.cwd(), options.themePath) : './';
+
     var cmd = [
-      'rm -f master.tar.gz pattern-lab-starter-master patternlab',
+      'rm -Rf master.tar.gz pattern-lab-starter-master patternlab' + ' ' + dest + '/patternlab' ,
       'curl -OL https://github.com/phase2/pattern-lab-starter/archive/master.tar.gz',
       'tar -xzf master.tar.gz',
       'mv pattern-lab-starter-master patternlab',
@@ -74,7 +76,7 @@ module.exports = Generator.extend({
           encoding: 'utf8'
         });
       } catch(error) {
-        console.error('Could not "mkdir -p" the themePath. That might be bad, it might not...');
+        console.error('Could not "mkdir -p" the themePath.');
       }
 
       try {
