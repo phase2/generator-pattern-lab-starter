@@ -19,3 +19,25 @@ Extras can be installed with:
 ```bash
 yo pattern-lab-starter:extras
 ```
+
+## Docker-based Development
+
+You can perform local development of this generator using our Docker integration.
+
+Install the dependencies:
+
+```
+docker-compose run --rm cli npm install
+```
+
+Then run the generator:
+
+```
+docker-compose run --rm yo pattern-lab-starter
+```
+
+This will output your code in ~/Projects/newproject. To change this, use the `YO_PROJECT_DIRECTORY` environment variable:
+
+```
+YO_PROJECT_DIRECTORY=/opt/development/mytheme docker-compose run --rm yo pattern-lab-starter
+```
