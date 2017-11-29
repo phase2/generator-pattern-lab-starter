@@ -1,4 +1,6 @@
-This is a [Yeoman](http://yeoman.io) generator for [Pattern Lab Starter](https://github.com/phase2/pattern-lab-starter).
+# Generator Pattern Lab Starter
+
+This is a [Yeoman](http://yeoman.io) generator for [Particle](https://github.com/phase2/pattern-lab-starter), a modern design-system driven Drupal theme.
 
 To install generator-pattern-lab-starter from npm, run:
 
