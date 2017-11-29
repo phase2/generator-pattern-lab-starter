@@ -14,4 +14,4 @@ services:
     network_mode: "bridge"
     volumes:
       - ${YO_PROJECT_DIRECTORY:-~/Projects/newproject}:/generated
-      - .:/usr/local/lib/node_modules/generator-pattern-lab-starter
+      - .:/usr/local/lib/node_modules/generator-pattern-lab-starter:ro
