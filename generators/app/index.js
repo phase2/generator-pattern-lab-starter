@@ -1,11 +1,14 @@
 'use strict';
+
 var Generator = require('yeoman-generator');
-var myPrompts = require('./prompts.js');
 var chalk = require('chalk');
-var yosay = require('yosay');
-var path = require('path');
 var exec = require('child_process').execSync;
+var fs = require('fs-extra');
+var path = require('path');
+var yosay = require('yosay');
 var _ = require('lodash');
+var myPrompts = require('./prompts.js');
+
 var options = {};
 
 module.exports = Generator.extend({
@@ -18,8 +21,7 @@ module.exports = Generator.extend({
         'Welcome to the remarkable ' + chalk.red('PatternLabStarter') + ' generator! ' + this.pkg.version + '\nPlease be in the folder you want files in now.'
       ));
     }
-    //options.themeName = _.last(this.env.cwd.split('/')); // parent folder
-    // options.themePath = '';
+
     options = _.assign(options, this.options);
   },
 
@@ -35,12 +37,6 @@ module.exports = Generator.extend({
     return this.prompt(prompts).then(function (props) {
       options = _.assign(options, props);
     });
-
-    // disabling this for now as pattern lab starter v8 doesn't really have drupal 7 or drupal 8 differences
-    // this.composeWith('pattern-lab-starter:extras', {options: options}, {
-    //   local: path.resolve(__dirname, '../extras')
-    // });
-
   },
 
   configuring: function () {
@@ -48,44 +44,73 @@ module.exports = Generator.extend({
   },
 
   default: function () {
-    var dest = options.themePath ? path.resolve(process.cwd(), options.themePath) : './';
+    const release = options['release'] || 'master'
+    const release_path = release + '.tar.gz';
+    const compressed = _.last(_.split(release_path, '/'));
+    const decompressed = _.replace('particle-' + release, '/', '-');
+    const download_url = 'https://github.com/phase2/particle/archive/' + release_path;
+    const dest = options.themePath ? path.resolve(process.cwd(), options.themePath) : './';
+    const themeName = 'patternlab';
+    const themePathFull = path.join(dest, themeName);
 
-    var cmd = [
-      'rm -Rf master.tar.gz particle-master patternlab' + ' ' + dest + '/patternlab' ,
-      'curl -OL https://github.com/phase2/particle/archive/master.tar.gz',
-      'tar -xzf master.tar.gz',
-      'mv particle-master patternlab',
-      'rm master.tar.gz'
-    ].join(' && ');
+    this.log('Assembling your Particle theme on release "' + release + '"...');
 
     try {
-      exec(cmd, {
-        encoding: 'utf8'
-      });
-    } catch(error) {
-      console.error('An error happened while trying to run this command: ');
-      console.log(cmd);
-      // console.log(error);
-      process.exit(1);
+      fs.removeSync(compressed);
+    } catch (err) {
+      if (err.code != 'ENOENT') {
+        console.error(err);
+        process.exit(2);
+      }
+    }
+    try {
+      fs.removeSync(decompressed)
+    } catch (err) {
+      if (err.code != 'ENOENT') {
+        console.error(err);
+        process.exit(2);
+      }
+    }
+    try {
+      fs.removeSync(themePathFull)
+    } catch (err) {
+      if (err.code != 'ENOENT') {
+        console.error(err);
+        process.exit(2);
+      }
     }
 
-    if (options.themePath) {
-      var dest = path.resolve(process.cwd(), options.themePath);
-      try {
-        exec('mkdir -p "' + dest + '"', {
-          encoding: 'utf8'
-        });
-      } catch(error) {
-        console.error('Could not "mkdir -p" the themePath.');
-      }
+    // @todo replace tarball retrieval & extraction with a Node library.
+    try {
+      this.log('Retrieving template from ' + download_url + '...');
+      exec([
+        'curl --fail --silent -OL ' + download_url,
+        'tar -xzf ' + compressed
+      ].join(' && '), {
+        encoding: 'utf8'
+      });
+    } catch(err) {
+      this.log.error('An error occurred running retrieving and extracting the template.');
+      process.exit(1);
+    }
+    // Remove the successfully decompressed archive source.
+    fs.removeSync(compressed);
 
+    if (!fs.existsSync(dest)) {
       try {
-        exec('mv patternlab "' + dest + '"', {
-          encoding: 'utf8'
-        });
-      } catch (error) {
-        console.error('Could not move theme into themePath.');
+        fs.mkdirpSync(dest);
+      } catch(error) {
+        this.log.error('Could not create the theme path: ' + error);
+        process.exit(2);
       }
+    }
+
+    try {
+      fs.renameSync(decompressed, themePathFull)
+    } catch(error) {
+      console.error(error);
+      this.log.error('Could not move theme into position: ' + error);
+      process.exit(2);
     }
   },
 
@@ -116,6 +141,6 @@ module.exports = Generator.extend({
     }
 
     this.log(yosay(finalWords));
-    console.log('If you don\'t see your prompt, try hitting enter.');
+    this.log("If you don't see your prompt, try hitting enter.");
   }
 });
