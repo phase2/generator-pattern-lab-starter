@@ -43,3 +43,11 @@ This will output your code in ~/Projects/newproject. To change this, use the `YO
 ```
 YO_PROJECT_DIRECTORY=/opt/development/mytheme docker-compose run --rm yo pattern-lab-starter
 ```
+
+## Contributor notes
+
+Run eslint against this project by running:
+
+```bash
+npm run lint
+```
