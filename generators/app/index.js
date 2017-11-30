@@ -1,13 +1,13 @@
 'use strict';
 
-var Generator = require('yeoman-generator');
-var chalk = require('chalk');
-var exec = require('child_process').execSync;
-var fs = require('fs-extra');
-var path = require('path');
-var yosay = require('yosay');
-var _ = require('lodash');
-var myPrompts = require('./prompts.js');
+const Generator = require('yeoman-generator');
+const chalk = require('chalk');
+const exec = require('child_process').execSync;
+const fs = require('fs-extra');
+const path = require('path');
+const yosay = require('yosay');
+const _ = require('lodash');
+const myPrompts = require('./prompts.js');
 
 var options = {};
 
@@ -45,15 +45,15 @@ module.exports = Generator.extend({
 
   default: function () {
     const release = options['release'] || 'master'
-    const release_path = release + '.tar.gz';
+    const release_path =  `${release}.tar.gz`;
     const compressed = _.last(_.split(release_path, '/'));
     const decompressed = _.replace('particle-' + release, '/', '-');
-    const download_url = 'https://github.com/phase2/particle/archive/' + release_path;
+    const download_url = `https://github.com/phase2/particle/archive/${release_path}`;
     const dest = options.themePath ? path.resolve(process.cwd(), options.themePath) : './';
     const themeName = 'patternlab';
     const themePathFull = path.join(dest, themeName);
 
-    this.log('Assembling your Particle theme on release "' + release + '"...');
+    this.log(`Assembling your Pattern Lab Starter/Particle theme on version ${release}...`);
 
     try {
       fs.removeSync(compressed);
@@ -82,10 +82,10 @@ module.exports = Generator.extend({
 
     // @todo replace tarball retrieval & extraction with a Node library.
     try {
-      this.log('Retrieving template from ' + download_url + '...');
+      this.log(`Retrieving template from ${download_url}...`);
       exec([
-        'curl --fail --silent -OL ' + download_url,
-        'tar -xzf ' + compressed
+        `curl --fail --silent -OL ${download_url}`,
+        `tar -xzf ${compressed}`
       ].join(' && '), {
         encoding: 'utf8'
       });
@@ -100,7 +100,7 @@ module.exports = Generator.extend({
       try {
         fs.mkdirpSync(dest);
       } catch(error) {
-        this.log.error('Could not create the theme path: ' + error);
+        this.log.error(`Could not create the theme path: ${error}`);
         process.exit(2);
       }
     }
@@ -109,7 +109,7 @@ module.exports = Generator.extend({
       fs.renameSync(decompressed, themePathFull)
     } catch(error) {
       console.error(error);
-      this.log.error('Could not move theme into position: ' + error);
+      this.log.error(`Could not move theme into position: ${error}`);
       process.exit(2);
     }
   },
